@@ -1,9 +1,9 @@
 ﻿using ShareValuationTracker.Api.Features.GetCompanyData.Models;
 using SimpleSoft.Mediator;
 
-namespace ShareValuationTracker.Api.Features.GetCompanyData.Commands
+namespace ShareValuationTracker.Api.Features.GetCompanyData.Queries
 {
-    public class GetYahooFinanceDataCommand : Command<YahooFinanceData>
+    public class GetYahooFinanceAnalysisDataQuery : Query<YahooFinanceAnalysisData>
     {
         public string StockCode { get; set; }
     }

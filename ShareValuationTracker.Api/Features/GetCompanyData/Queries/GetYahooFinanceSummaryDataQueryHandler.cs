@@ -3,14 +3,14 @@ using Placeholder.API.Features.GetCompanyData.Models;
 using Placeholder.API.Services.Yahoo;
 using SimpleSoft.Mediator;
 
-namespace Placeholder.API.Features.GetCompanyData.Commands
+namespace Placeholder.API.Features.GetCompanyData.Queries
 {
-    public class GetYahooFinanceSummaryDataCommandHandler : ICommandHandler<GetYahooFinanceSummaryDataCommand, YahooFinanceSummaryData>
+    public class GetYahooFinanceSummaryDataQueryHandler : IQueryHandler<GetYahooFinanceSummaryDataQuery, YahooFinanceSummaryData>
     {
         private readonly IYahooFinanceService _yahooFinanceService;
         private readonly IYahooFinanceDataSelector _companyDataProvider;
 
-        public GetYahooFinanceSummaryDataCommandHandler(
+        public GetYahooFinanceSummaryDataQueryHandler(
             IYahooFinanceService yahooFinanceService, 
             IYahooFinanceDataSelector companyDataProvider)
         {
@@ -19,15 +19,16 @@ namespace Placeholder.API.Features.GetCompanyData.Commands
         }
 
 
-        public async Task<YahooFinanceSummaryData> HandleAsync(GetYahooFinanceSummaryDataCommand cmd, CancellationToken ct)
+        public async Task<YahooFinanceSummaryData> HandleAsync(GetYahooFinanceSummaryDataQuery query, CancellationToken ct)
         {
-            var summaryStream = await _yahooFinanceService.GetYahooSummaryStreamByCompany(cmd.StockCode);
+            var summaryStream = await _yahooFinanceService.GetYahooSummaryStreamByCompany(query.StockCode);
 
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.Load(summaryStream);
 
-            return new YahooFinanceSummaryData 
+            return new YahooFinanceSummaryData
             {
+                MarketCapitalization = _companyDataProvider.GetMarketCapitalizationFromSummaryStream(htmlDoc),
                 PreviousCloseSharePrice = _companyDataProvider.GetPreviousCloseSharePriceFromSummaryStream(htmlDoc),
                 EarningsPerShare = _companyDataProvider.GetEarningsPerShareFromSummaryStream(htmlDoc)
             };

@@ -2,6 +2,7 @@ using Placeholder.API.Adapters.DIExtensions;
 using Placeholder.API.Features.GetCompanyData.DIExtensions;
 using Placeholder.API.Services.Http.DIExtensions;
 using Placeholder.API.Services.YahooFinance.DIExtensions;
+using ShareValuationTracker.Api.Features.CalculateDiscountedCashFlow.DIExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddHttp();
 builder.Services.AddAdapters();
 
 builder.Services.AddGetCompaniesFeature();
+builder.Services.AddCalculateDiscountedCashFlowFeature();
 
 var app = builder.Build();
 

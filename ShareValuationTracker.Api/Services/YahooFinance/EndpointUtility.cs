@@ -15,5 +15,12 @@
 
             return $"quote/{shareCode}/cash-flow?p={shareCode}";
         }
+
+        public string GetYahooAnalysis(string stockCode)
+        {
+            string shareCode = $"{stockCode}.{Constants.YahooMarketAcronyms.Asx}";
+
+            return $"quote/{shareCode}/analysis?p={shareCode}";
+        }
     }
 }

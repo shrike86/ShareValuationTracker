@@ -1,16 +1,16 @@
 ﻿using ShareValuationTracker.Api.Features.GetCompanyData;
-using ShareValuationTracker.Api.Features.GetCompanyData.Commands;
 using ShareValuationTracker.Api.Features.GetCompanyData.Models;
+using ShareValuationTracker.Api.Features.GetCompanyData.Queries;
 using SimpleSoft.Mediator;
 
-namespace Placeholder.API.Features.GetCompanyData.Queries
+namespace Placeholder.API.Features.GetCompanyData.Commands
 {
-    public class GetCompanyDataQueryHandler : IQueryHandler<GetCompanyDataQuery, List<CompanyData>>
+    public class GetCompanyDataCommandHandler : ICommandHandler<GetCompanyDataCommand, List<CompanyData>>
     {
         private readonly IMediator _mediator;
         private readonly ICompanyDataSelector _companyDataSelector;
 
-        public GetCompanyDataQueryHandler(
+        public GetCompanyDataCommandHandler(
             IMediator mediator, 
             ICompanyDataSelector companyDataSelector)
         {
@@ -18,15 +18,15 @@ namespace Placeholder.API.Features.GetCompanyData.Queries
             _companyDataSelector = companyDataSelector;
         }
 
-        public async Task<List<CompanyData>> HandleAsync(GetCompanyDataQuery query, CancellationToken ct)
+        public async Task<List<CompanyData>> HandleAsync(GetCompanyDataCommand query, CancellationToken ct)
         {
             var companyData = new List<CompanyData>();
 
             foreach (var company in Constants.Companies.Asx)
             {
-                var yahooFinanceData = await _mediator.SendAsync(new GetYahooFinanceDataCommand { StockCode = company.StockCode }, ct);
+                var yahooFinanceData = await _mediator.FetchAsync(new GetYahooFinanceDataQuery { StockCode = company.StockCode }, ct);
 
-                companyData.Add(_companyDataSelector.Select(company, yahooFinanceData));
+                companyData.Add(await _companyDataSelector.SelectAsync(company, yahooFinanceData, ct));
             }
 
             return companyData;

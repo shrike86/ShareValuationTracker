@@ -4,8 +4,13 @@
     {
         public string Name { get; set; }
         public string StockCode { get; set; }
-        public string PreviousCloseSharePrice { get; set; }
-        public string EarningsPerShare { get; set; }
-        public string FreeCashFlowTrailingTwelveMonths { get; set; }
+        public double MarketCapitalization { get; set; }
+        public long SharesOutstanding { get; set; }
+        public decimal PreviousCloseSharePrice { get; set; }
+        public decimal EarningsPerShare { get; set; }
+        public long FreeCashFlowTrailingTwelveMonths { get; set; }
+        public double DiscountedCashFlow { get; set; }
+        public string DefaultGrowthRatePercentage { get; set; }
+        public double CalculatedSharePrice { get; set; }
     }
 }

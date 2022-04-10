@@ -27,5 +27,10 @@ namespace Placeholder.API.Services.Yahoo
         {
             return await _baseHttpService.GetStreamAsync(_httpClient!, _endpointUtility.GetYahooCashFlow(stockCode));
         }
+
+        public async Task<Stream> GetYahooAnalysisStreamByCompany(string stockCode)
+        {
+            return await _baseHttpService.GetStreamAsync(_httpClient!, _endpointUtility.GetYahooAnalysis(stockCode));
+        }
     }
 }

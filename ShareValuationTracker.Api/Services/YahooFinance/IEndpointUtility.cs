@@ -4,5 +4,6 @@
     {
         string GetYahooSummary(string stockCode);
         string GetYahooCashFlow(string stockCode);
+        string GetYahooAnalysis(string stockCode);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Placeholder.API.Features.GetCompanyData.Queries;
+using Placeholder.API.Features.GetCompanyData.Commands;
 using SimpleSoft.Mediator;
 
 namespace Placeholder.API.Controllers
@@ -19,7 +19,7 @@ namespace Placeholder.API.Controllers
         [Route("companies")]
         public async Task<IActionResult> GetCompanyData(CancellationToken ct) 
         {
-            return Ok(await _mediator.FetchAsync(new GetCompanyDataQuery(), ct));
+            return Ok(await _mediator.SendAsync(new GetCompanyDataCommand(), ct));
         }
     }
 }

@@ -3,14 +3,14 @@ using Placeholder.API.Features.GetCompanyData.Models;
 using Placeholder.API.Services.Yahoo;
 using SimpleSoft.Mediator;
 
-namespace Placeholder.API.Features.GetCompanyData.Commands
+namespace Placeholder.API.Features.GetCompanyData.Queries
 {
-    public class GetYahooFinanceCashFlowDataCommandHandler : ICommandHandler<GetYahooFinanceCashFlowDataCommand, YahooFinanceCashflowData>
+    public class GetYahooFinanceCashFlowDataQueryHandler : IQueryHandler<GetYahooFinanceCashFlowDataQuery, YahooFinanceCashflowData>
     {
         private readonly IYahooFinanceService _yahooFinanceService;
         private readonly IYahooFinanceDataSelector _companyDataSelector;
 
-        public GetYahooFinanceCashFlowDataCommandHandler(
+        public GetYahooFinanceCashFlowDataQueryHandler(
             IYahooFinanceService yahooFinanceService, 
             IYahooFinanceDataSelector companyDataSelector)
         {
@@ -18,9 +18,9 @@ namespace Placeholder.API.Features.GetCompanyData.Commands
             _companyDataSelector = companyDataSelector;
         }
 
-        public async Task<YahooFinanceCashflowData> HandleAsync(GetYahooFinanceCashFlowDataCommand cmd, CancellationToken ct)
+        public async Task<YahooFinanceCashflowData> HandleAsync(GetYahooFinanceCashFlowDataQuery query, CancellationToken ct)
         {
-            var cashFlowStream = await _yahooFinanceService.GetYahooCashflowStreamByCompany(cmd.StockCode);
+            var cashFlowStream = await _yahooFinanceService.GetYahooCashflowStreamByCompany(query.StockCode);
 
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.Load(cashFlowStream);

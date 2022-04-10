@@ -1,9 +1,9 @@
 ﻿using Placeholder.API.Features.GetCompanyData.Models;
 using SimpleSoft.Mediator;
 
-namespace Placeholder.API.Features.GetCompanyData.Commands
+namespace Placeholder.API.Features.GetCompanyData.Queries
 {
-    public class GetYahooFinanceSummaryDataCommand : Command<YahooFinanceSummaryData> 
+    public class GetYahooFinanceCashFlowDataQuery : Query<YahooFinanceCashflowData>
     {
         public string StockCode { get; set; }
     }

@@ -5,6 +5,6 @@ namespace ShareValuationTracker.Api.Features.GetCompanyData
 {
     public interface ICompanyDataSelector
     {
-        CompanyData Select(Company company, YahooFinanceData yahooFinanceData);
+        Task<CompanyData> SelectAsync(Company company, YahooFinanceData yahooFinanceData, CancellationToken ct);
     }
 }
