@@ -18,12 +18,14 @@ namespace Placeholder.API.Services.Yahoo
             _baseHttpService = baseHttpService;
             _endpointUtility = endpointUtility;
         }
-
         public async Task<Stream> GetYahooSummaryStreamByCompany(string stockCode)
         {
-            var url = $"{_endpointUtility.GetYahooSummary(_httpClient.BaseAddress.ToString(), stockCode)}";
+            return await _baseHttpService.GetStreamAsync(_httpClient!, _endpointUtility.GetYahooSummary(stockCode));
+        }
 
-            return await _baseHttpService.GetStreamAsync(_httpClient!, url);
+        public async Task<Stream> GetYahooCashflowStreamByCompany(string stockCode)
+        {
+            return await _baseHttpService.GetStreamAsync(_httpClient!, _endpointUtility.GetYahooCashFlow(stockCode));
         }
     }
 }

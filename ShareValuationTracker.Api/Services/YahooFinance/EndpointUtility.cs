@@ -2,11 +2,18 @@
 {
     public class EndpointUtility : IEndpointUtility
     {
-        public string GetYahooSummary(string baseUrl, string stockCode)
+        public string GetYahooSummary(string stockCode)
         {
             string shareCode = $"{stockCode}.{Constants.YahooMarketAcronyms.Asx}";
 
-            return $"{baseUrl}quote/{shareCode}?p={shareCode}&tsrc=fin-srch";
+            return $"quote/{shareCode}?p={shareCode}&tsrc=fin-srch";
+        }
+
+        public string GetYahooCashFlow(string stockCode)
+        {
+            string shareCode = $"{stockCode}.{Constants.YahooMarketAcronyms.Asx}";
+
+            return $"quote/{shareCode}/cash-flow?p={shareCode}";
         }
     }
 }

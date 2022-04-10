@@ -29,7 +29,7 @@
         {
             _logger.LogInformation($"Calling GET as stream \"{endpoint}\"");
 
-            var requestUri = new Uri(endpoint);
+            var requestUri = new Uri($"{httpClient.BaseAddress}{endpoint}");
 
             return await httpClient.GetStreamAsync(requestUri);
         }

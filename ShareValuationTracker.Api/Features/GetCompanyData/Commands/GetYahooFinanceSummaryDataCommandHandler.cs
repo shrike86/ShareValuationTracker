@@ -8,11 +8,11 @@ namespace Placeholder.API.Features.GetCompanyData.Commands
     public class GetYahooFinanceSummaryDataCommandHandler : ICommandHandler<GetYahooFinanceSummaryDataCommand, YahooFinanceSummaryData>
     {
         private readonly IYahooFinanceService _yahooFinanceService;
-        private readonly ICompanyDataProvider _companyDataProvider;
+        private readonly IYahooFinanceDataSelector _companyDataProvider;
 
         public GetYahooFinanceSummaryDataCommandHandler(
             IYahooFinanceService yahooFinanceService, 
-            ICompanyDataProvider companyDataProvider)
+            IYahooFinanceDataSelector companyDataProvider)
         {
             _yahooFinanceService = yahooFinanceService;
             _companyDataProvider = companyDataProvider;
@@ -28,8 +28,8 @@ namespace Placeholder.API.Features.GetCompanyData.Commands
 
             return new YahooFinanceSummaryData 
             {
-                PreviousCloseSharePrice = _companyDataProvider.GetPreviousCloseSharePrice(htmlDoc),
-                EarningsPerShare = _companyDataProvider.GetEarningsPerShare(htmlDoc)
+                PreviousCloseSharePrice = _companyDataProvider.GetPreviousCloseSharePriceFromSummaryStream(htmlDoc),
+                EarningsPerShare = _companyDataProvider.GetEarningsPerShareFromSummaryStream(htmlDoc)
             };
         }
     }

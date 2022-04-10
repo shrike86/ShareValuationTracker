@@ -1,5 +1,4 @@
-﻿using Placeholder.API.Features.GetCompanyData;
-using Placeholder.API.Features.GetCompanyData.Models;
+﻿using Placeholder.API.Features.GetCompanyData.Models;
 
 namespace Placeholder.API
 {
@@ -9,7 +8,11 @@ namespace Placeholder.API
         { 
             public static List<Company> Asx = new List<Company>
             {
-                new(){ Name = "Woodside", StockCode = "WPL"} 
+                new(){ Name = "Commonwealth Bank of Australia", StockCode = "CBA"} ,
+                new(){ Name = "CSL Limited", StockCode = "CSL"},
+                new(){ Name = "BHP Group Limited", StockCode = "BHP"},
+                new(){ Name = "Westpac Banking Corporation", StockCode = "WBC"},
+                new(){ Name = "Woodside Petroleum Ltd", StockCode = "WPL"} 
             };
         }
 
@@ -22,6 +25,7 @@ namespace Placeholder.API
         {
             public const string PreviousCloseSharePrice = "//body//div[@id='quote-header-info']//fin-streamer";
             public const string EarningsPerShare = "//body//div[@data-test='right-summary-table']//td";
+            public const string FreeCashFlowTrailingTwelveMonths = "//body//div[@id='Main']//div[@data-test='fin-row']";
         }
     }
 }

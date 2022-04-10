@@ -2,6 +2,7 @@
 {
     public interface IEndpointUtility
     {
-        string GetYahooSummary(string baseUrl, string stockCode);
+        string GetYahooSummary(string stockCode);
+        string GetYahooCashFlow(string stockCode);
     }
 }
