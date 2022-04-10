@@ -1,7 +1,9 @@
-﻿using ShareValuationTracker.Api.Features.GetCompanyData;
+﻿using Placeholder.API.Features.GetCompanyData.Models;
+using ShareValuationTracker.Api.Features.GetCompanyData;
 using ShareValuationTracker.Api.Features.GetCompanyData.Models;
 using ShareValuationTracker.Api.Features.GetCompanyData.Queries;
 using SimpleSoft.Mediator;
+using System.Threading.Tasks.Dataflow;
 
 namespace Placeholder.API.Features.GetCompanyData.Commands
 {
@@ -11,7 +13,7 @@ namespace Placeholder.API.Features.GetCompanyData.Commands
         private readonly ICompanyDataSelector _companyDataSelector;
 
         public GetCompanyDataCommandHandler(
-            IMediator mediator, 
+            IMediator mediator,
             ICompanyDataSelector companyDataSelector)
         {
             _mediator = mediator;
@@ -22,12 +24,26 @@ namespace Placeholder.API.Features.GetCompanyData.Commands
         {
             var companyData = new List<CompanyData>();
 
-            foreach (var company in Constants.Companies.Asx)
+            var options = new ExecutionDataflowBlockOptions
+            {
+                MaxDegreeOfParallelism = 10,
+                BoundedCapacity = 100
+            };
+            
+            var block = new ActionBlock<Company>(async company => 
             {
                 var yahooFinanceData = await _mediator.FetchAsync(new GetYahooFinanceDataQuery { StockCode = company.StockCode }, ct);
 
                 companyData.Add(await _companyDataSelector.SelectAsync(company, yahooFinanceData, ct));
+            }, options);
+
+            foreach (var company in Constants.Companies.Asx200)
+            {
+                await block.SendAsync(company);
             }
+
+            block.Complete();
+            await block.Completion;
 
             return companyData;
         }

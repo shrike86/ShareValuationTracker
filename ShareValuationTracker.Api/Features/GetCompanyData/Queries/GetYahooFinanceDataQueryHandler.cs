@@ -21,7 +21,7 @@ namespace ShareValuationTracker.Api.Features.GetCompanyData.Queries
 
             return new YahooFinanceData
             {
-                MarketCapitalization = summaryData.MarketCapitalization.Remove(summaryData.MarketCapitalization.Length - 1),
+                MarketCapitalization = summaryData.MarketCapitalization?.Remove(summaryData.MarketCapitalization.Length - 1),
                 EarningsPerShare = summaryData.EarningsPerShare,
                 PreviousCloseSharePrice = summaryData.PreviousCloseSharePrice,
                 FreeCashFlowTrailingTwelveMonths = cashFlowData.FreeCashFlowTrailingTwelveMonths,
